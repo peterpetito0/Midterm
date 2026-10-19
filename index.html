@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StudyPrep</title>
+  <meta name="description" content="Turn your slideshows and topic lists into a study plan, flashcards and practice quizzes.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">Study<span>Prep</span></a>
+      <nav class="nav">
+        <a href="#courses">Courses</a>
+        <a href="#how">How it works</a>
+        <a class="btn btn-primary btn-sm" href="study.html">Start studying</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <h1>Walk into your exam ready.</h1>
+        <p>Pick your course, tell us what's on the test, upload your lecture slides, and get a day-by-day study plan with flashcards and practice quizzes.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="study.html">Set up my exam →</a>
+          <a class="btn" href="#how">See how it works</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="courses">
+      <div class="wrap">
+        <h2>Choose your course</h2>
+        <p class="sub">Each course comes with starter topics, flashcards and practice questions.</p>
+        <div class="grid" id="course-cards"></div>
+      </div>
+    </section>
+
+    <section class="section" id="how">
+      <div class="wrap">
+        <h2>How it works</h2>
+        <p class="sub">About two minutes of setup. Everything stays in your browser.</p>
+        <div class="grid steps">
+          <div class="card"><h3>Pick a course</h3><p>Python, Mobile App Projects, Databases, or Financial Institutions.</p></div>
+          <div class="card"><h3>Describe the exam</h3><p>Test, midterm or final, the date, and which topics will be covered.</p></div>
+          <div class="card"><h3>Add your materials</h3><p>Upload slideshows (.pptx, .pdf, .txt) or paste notes and a study guide.</p></div>
+          <div class="card"><h3>Study</h3><p>Follow your plan, flip flashcards made from your slides, and take practice quizzes.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">StudyPrep — your materials never leave your device.</div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script>
+    const wrap = document.getElementById("course-cards");
+    for (const [id, c] of Object.entries(window.COURSES)) {
+      const a = document.createElement("a");
+      a.className = "card";
+      a.href = "study.html?course=" + id;
+      a.innerHTML = `<div class="icon">${c.icon}</div><h3></h3><p></p>`;
+      a.querySelector("h3").textContent = c.name;
+      a.querySelector("p").textContent = c.blurb;
+      wrap.appendChild(a);
+    }
+  </script>
+</body>
+</html>

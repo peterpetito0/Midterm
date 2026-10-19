@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StudyPrep — Study</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">Study<span>Prep</span></a>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <button class="btn btn-sm" id="reset-btn" type="button">Start over</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="app">
+    <div class="wrap">
+      <div class="progress-steps" id="progress"></div>
+
+      <!-- Step 1: course -->
+      <section class="panel step" data-step="0">
+        <h2>Which course are you studying for?</h2>
+        <p class="hint">This loads starter topics, flashcards and practice questions.</p>
+        <div class="choice-grid" id="course-choices"></div>
+        <div class="nav-buttons">
+          <span></span>
+          <button class="btn btn-primary" data-next type="button">Next →</button>
+        </div>
+      </section>
+
+      <!-- Step 2: exam details + topics -->
+      <section class="panel step" data-step="1">
+        <h2>Tell me about the exam</h2>
+        <div class="row">
+          <div class="field">
+            <label for="exam-type">Type</label>
+            <select id="exam-type">
+              <option value="test">Test / quiz</option>
+              <option value="midterm">Midterm</option>
+              <option value="final">Final exam</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="exam-date">Exam date</label>
+            <input type="date" id="exam-date">
+          </div>
+          <div class="field">
+            <label for="exam-hours">Study hours per day</label>
+            <input type="number" id="exam-hours" min="0.5" max="12" step="0.5" value="1.5">
+          </div>
+        </div>
+        <div class="field">
+          <label for="exam-format">Exam format (optional)</label>
+          <input type="text" id="exam-format" placeholder="e.g. 40 multiple choice + 2 coding problems, open notes">
+        </div>
+        <div class="field">
+          <span class="label">Which topics are covered? How confident are you?</span>
+          <p class="hint">Uncheck anything not on the exam. Low-confidence topics get more study time.</p>
+          <div class="topic-list" id="topic-list"></div>
+        </div>
+        <div class="field">
+          <label for="custom-topic">Add a topic from your syllabus</label>
+          <div style="display:flex; gap:8px">
+            <input type="text" id="custom-topic" placeholder="e.g. Recursion, Firebase auth, Stored procedures…">
+            <button class="btn" id="add-topic" type="button">Add</button>
+          </div>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn" data-prev type="button">← Back</button>
+          <button class="btn btn-primary" data-next type="button">Next →</button>
+        </div>
+      </section>
+
+      <!-- Step 3: materials -->
+      <section class="panel step" data-step="2">
+        <h2>Add your study materials</h2>
+        <p class="hint">Upload lecture slideshows and I'll turn each slide into a flashcard. Files are read in your browser and never uploaded anywhere.</p>
+        <div class="field">
+          <span class="label">Slideshows &amp; handouts</span>
+          <label class="dropzone" id="dropzone">
+            <input type="file" id="file-input" multiple accept=".pptx,.pdf,.txt,.md" hidden>
+            <strong>Drop files here or click to choose</strong><br>
+            <span class="hint">.pptx, .pdf, .txt, .md</span>
+          </label>
+          <ul class="file-list" id="file-list"></ul>
+        </div>
+        <div class="field">
+          <label for="notes">Notes, study guide or key terms (optional)</label>
+          <p class="hint">Lines written as <code>Term: definition</code> or <code>Term - definition</code> become flashcards.</p>
+          <textarea id="notes" placeholder="Primary key: uniquely identifies each row&#10;Normalization - organizing tables to reduce redundancy"></textarea>
+        </div>
+        <div class="field">
+          <label for="professor-hints">Anything the professor said will be on it? (optional)</label>
+          <textarea id="professor-hints" style="min-height:80px" placeholder="e.g. Know the difference between INNER and LEFT JOIN; chapter 4 review questions"></textarea>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn" data-prev type="button">← Back</button>
+          <button class="btn btn-primary" data-next type="button">Build my study plan →</button>
+        </div>
+      </section>
+
+      <!-- Step 4: dashboard -->
+      <section class="step" data-step="3">
+        <div class="dash-head">
+          <div>
+            <h2 id="dash-title"></h2>
+            <p class="hint" id="dash-sub"></p>
+          </div>
+          <button class="btn btn-sm" data-goto="1" type="button">Edit exam setup</button>
+        </div>
+        <div class="stats" id="stats"></div>
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="plan" type="button">Study plan</button>
+          <button class="tab" data-tab="cards" type="button">Flashcards</button>
+          <button class="tab" data-tab="quiz" type="button">Practice quiz</button>
+          <button class="tab" data-tab="progress" type="button">Progress</button>
+        </div>
+        <div class="panel" id="tab-plan"></div>
+        <div class="panel hidden" id="tab-cards"></div>
+        <div class="panel hidden" id="tab-quiz"></div>
+        <div class="panel hidden" id="tab-progress"></div>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/parsers.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
