@@ -5,44 +5,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>StudyPrep</title>
   <meta name="description" content="Turn your slideshows and topic lists into a study plan, flashcards and practice quizzes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="index.html">Study<span>Prep</span></a>
+      <a class="brand" href="index.html"><span class="mark">S</span>StudyPrep</a>
       <nav class="nav">
         <a href="#courses">Courses</a>
         <a href="#how">How it works</a>
-        <a class="btn btn-primary btn-sm" href="study.html">Start studying</a>
+        <a href="#privacy">Privacy</a>
+        <a class="btn btn-dark" href="study.html">Start studying</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="wrap">
-        <h1>Walk into your exam ready.</h1>
-        <p>Pick your course, tell us what's on the test, upload your lecture slides, and get a day-by-day study plan with flashcards and practice quizzes.</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="study.html">Set up my exam →</a>
-          <a class="btn" href="#how">See how it works</a>
+    <div class="wrap">
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">Midterm season, handled</span>
+          <h1>Walk into your exam <em>ready.</em></h1>
+          <p class="lede">Pick your course, tell us what's on the test, and drop in your lecture slides. You'll get a day-by-day plan, flashcards and practice quizzes.</p>
+          <div class="actions">
+            <a class="btn btn-primary btn-lg" href="study.html">Set up my exam →</a>
+            <a class="btn btn-lg" href="#how">See how it works</a>
+          </div>
+          <span class="fine">About two minutes of setup · Your files never leave your device</span>
         </div>
-      </div>
-    </section>
+
+        <div class="hero-art" aria-hidden="true">
+          <div class="preview plan">
+            <div class="head"><span>Today · Day 3 of 9</span><span class="badge">Databases</span></div>
+            <div class="title">Normalization &amp; SQL joins</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div class="task-line done"><span class="check on">✓</span><span>Review 1NF → 3NF slides</span><span class="mins">25m</span></div>
+              <div class="task-line"><span class="check"></span><span>Study: Joins</span><span class="mins">40m</span></div>
+              <div class="task-line"><span class="check"></span><span>Flashcards: still learning</span><span class="mins">15m</span></div>
+              <div class="task-line"><span class="check"></span><span>Practice quiz · 10 questions</span><span class="mins">15m</span></div>
+            </div>
+          </div>
+          <div class="preview card">
+            <div class="head"><span>Flashcard · 12 / 48</span><span class="badge">From your slides</span></div>
+            <div class="card-q">WHERE vs. HAVING?</div>
+            <div class="card-a">WHERE filters rows before grouping; HAVING filters groups after aggregation.</div>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <section class="section" id="courses">
       <div class="wrap">
-        <h2>Choose your course</h2>
-        <p class="sub">Each course comes with starter topics, flashcards and practice questions.</p>
+        <div class="section-head">
+          <div><span class="eyebrow">Courses</span><h2>Choose your <em>course</em></h2></div>
+          <p>Each course comes with starter topics, flashcards and practice questions. Your own slides and notes add the rest.</p>
+        </div>
         <div class="grid" id="course-cards"></div>
       </div>
     </section>
 
     <section class="section" id="how">
       <div class="wrap">
-        <h2>How it works</h2>
-        <p class="sub">About two minutes of setup. Everything stays in your browser.</p>
+        <div class="section-head">
+          <div><span class="eyebrow">How it works</span><h2>Four steps to <em>ready</em></h2></div>
+          <p>About two minutes of setup, then a plan that adapts to what you know and what you don't.</p>
+        </div>
         <div class="grid steps">
           <div class="card"><h3>Pick a course</h3><p>Python, Mobile App Projects, Databases, or Financial Institutions.</p></div>
           <div class="card"><h3>Describe the exam</h3><p>Test, midterm or final, the date, and which topics will be covered.</p></div>
@@ -51,10 +81,21 @@
         </div>
       </div>
     </section>
+
+    <section class="section" id="privacy">
+      <div class="wrap privacy">
+        <div><span class="eyebrow">Privacy</span><h2 style="font-size:clamp(40px,5vw,56px);margin-top:8px">Your slides stay <em>yours.</em></h2></div>
+        <ul>
+          <li><span class="check on">✓</span>Slides and notes are read right in your browser, never uploaded.</li>
+          <li><span class="check on">✓</span>No account, no sign-up, no tracking.</li>
+          <li><span class="check on">✓</span>Progress is saved on this device, and "Start over" clears it.</li>
+        </ul>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap">StudyPrep — your materials never leave your device.</div>
+    <div class="wrap"><span>StudyPrep</span><span>Your materials never leave your device.</span></div>
   </footer>
 
   <script src="js/data.js"></script>
@@ -64,7 +105,8 @@
       const a = document.createElement("a");
       a.className = "card";
       a.href = "study.html?course=" + id;
-      a.innerHTML = `<div class="icon">${c.icon}</div><h3></h3><p></p>`;
+      a.innerHTML = `<span><span class="badge"></span></span><h3></h3><p></p><span class="go">Start studying →</span>`;
+      a.querySelector(".badge").textContent = c.short;
       a.querySelector("h3").textContent = c.name;
       a.querySelector("p").textContent = c.blurb;
       wrap.appendChild(a);

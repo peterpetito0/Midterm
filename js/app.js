@@ -64,7 +64,7 @@
 
   function renderProgress() {
     $("#progress").innerHTML = STEP_NAMES.map((n, i) =>
-      `<span class="pill ${i === state.step ? "active" : i < state.step ? "done" : ""}">${i + 1}. ${n}</span>`
+      `<span class="pill ${i === state.step ? "active" : i < state.step ? "done" : ""}"><b>0${i + 1}</b> ${n}</span>`
     ).join("");
   }
 
@@ -105,7 +105,7 @@
       const b = document.createElement("button");
       b.type = "button";
       b.className = "choice" + (state.course === id ? " selected" : "");
-      b.innerHTML = `<div class="icon">${c.icon}</div><strong>${esc(c.name)}</strong><span>${esc(c.blurb)}</span>`;
+      b.innerHTML = `<span class="badge">${esc(c.short)}</span><strong>${esc(c.name)}</strong><span>${esc(c.blurb)}</span>`;
       b.addEventListener("click", () => { setCourse(id); save(); renderCourseStep(); });
       box.appendChild(b);
     }
@@ -273,20 +273,20 @@
       const date = new Date(start); date.setDate(start.getDate() + d);
       const tasks = [];
       if (reviewDay && d === left - 1) {
-        tasks.push("Full review: flip through all flashcards marked “still learning”");
-        tasks.push("Take two practice quizzes and re-read explanations you missed");
-        tasks.push("Light night — sleep well before the exam");
+        tasks.push(["Full review: flip through all flashcards marked “still learning”", 30]);
+        tasks.push(["Take two practice quizzes and re-read explanations you missed", 30]);
+        tasks.push(["Light night — sleep well before the exam", 0]);
       } else {
         const today = new Set();
         for (let s = 0; s < perDay && seq.length; s++) today.add(seq[k++ % seq.length]);
-        today.forEach((t) => tasks.push(`Study: ${t}`));
+        today.forEach((t) => tasks.push([`Study: ${t}`, SESSION_MINUTES]));
         const chunk = slides.slice(d * slidesPerDay, (d + 1) * slidesPerDay);
         if (chunk.length) {
           const byFile = {};
           chunk.forEach((c) => (byFile[c.file] = byFile[c.file] || []).push(c.n));
-          for (const [f, ns] of Object.entries(byFile)) tasks.push(`Review ${ns.length > 1 ? `slides ${ns[0]}–${ns[ns.length - 1]}` : `slide ${ns[0]}`} of ${f}`);
+          for (const [f, ns] of Object.entries(byFile)) tasks.push([`Review ${ns.length > 1 ? `slides ${ns[0]}–${ns[ns.length - 1]}` : `slide ${ns[0]}`} of ${f}`, Math.max(5, ns.length * 3)]);
         }
-        tasks.push("Practice quiz (10 questions)");
+        tasks.push(["Practice quiz (10 questions)", 15]);
       }
       days.push({ date, tasks, key: date.toISOString().slice(0, 10) });
     }
@@ -308,7 +308,8 @@
     const c = course();
     const left = daysUntil(state.examDate);
     const typeName = { test: "Test", midterm: "Midterm", final: "Final exam" }[state.examType];
-    $("#dash-title").textContent = `${c.icon} ${c.name} — ${typeName}`;
+    $("#dash-title").innerHTML = `${esc(c.name)} <em>${esc(typeName.toLowerCase())}</em>`;
+    $("#dash-badge").textContent = c.short;
     $("#dash-sub").textContent = [
       state.examDate ? new Date(state.examDate + "T00:00:00").toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" }) : "No exam date set",
       state.format
@@ -334,7 +335,7 @@
     const plan = buildPlan();
     let html = "";
     if (state.hints.trim()) {
-      html += `<div class="explain" style="margin-bottom:16px"><strong>Professor's hints — prioritize these:</strong><br>${esc(state.hints).replace(/\n/g, "<br>")}</div>`;
+      html += `<div class="explain callout"><span class="eyebrow">Professor's hints — prioritize these</span><br>${esc(state.hints).replace(/\n/g, "<br>")}</div>`;
     }
     if (plan.left === null) {
       box.innerHTML = html + `<div class="empty">Add your exam date to get a day-by-day plan.<br><br><button class="btn" data-goto="1" type="button">Set exam date</button></div>`;
@@ -342,16 +343,17 @@
       box.innerHTML = html + `<div class="empty">${plan.left === 0 ? "Your exam is today — do a quick flashcard pass and one practice quiz. Good luck!" : "This exam date has passed. Update it to plan for your next one."}<br><br><button class="btn" data-goto="1" type="button">Change date</button></div>`;
     } else {
       if (!plan.covered) {
-        html += `<p class="hint">⚠️ At ${state.hoursPerDay}h/day there isn't time for every topic session. Consider more hours per day or prioritize low-confidence topics.</p>`;
+        html += `<p class="warn">At ${state.hoursPerDay}h/day there isn't time for every topic session. Consider more hours per day or prioritize low-confidence topics.</p>`;
       }
       html += plan.days.map((d, i) => `
         <div class="plan-day ${i === 0 ? "today" : ""}">
           <div class="date">${i === 0 ? "Today" : d.date.toLocaleDateString(undefined, { weekday: "short" })}
-            <small>${d.date.toLocaleDateString(undefined, { month: "short", day: "numeric" })}</small></div>
-          <div>${d.tasks.map((t, j) => {
+            <small>${d.date.toLocaleDateString(undefined, { month: "short", day: "numeric" })} · Day ${i + 1} of ${plan.days.length}</small></div>
+          <div>${d.tasks.map(([t, mins], j) => {
             const id = `${d.key}:${j}`;
-            return `<label style="display:flex;gap:8px;align-items:flex-start;margin-bottom:4px">
-              <input type="checkbox" data-task="${esc(id)}" ${state.progress.done.includes(id) ? "checked" : ""}> <span>${esc(t)}</span></label>`;
+            return `<label class="task">
+              <input type="checkbox" data-task="${esc(id)}" ${state.progress.done.includes(id) ? "checked" : ""}>
+              <span class="task-text">${esc(t)}</span>${mins ? `<span class="mins">${mins}m</span>` : ""}</label>`;
           }).join("")}</div>
         </div>`).join("");
       box.innerHTML = html;

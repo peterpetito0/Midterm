@@ -3,13 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>StudyPrep — Study</title>
+  <title>StudyPrep Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="index.html">Study<span>Prep</span></a>
+      <a class="brand" href="index.html"><span class="mark">S</span>StudyPrep</a>
       <nav class="nav">
         <a href="index.html">Home</a>
         <button class="btn btn-sm" id="reset-btn" type="button">Start over</button>
@@ -23,7 +26,8 @@
 
       <!-- Step 1: course -->
       <section class="panel step" data-step="0">
-        <h2>Which course are you studying for?</h2>
+        <span class="eyebrow">Step 01</span>
+        <h2>Which course are you <em>studying for?</em></h2>
         <p class="hint">This loads starter topics, flashcards and practice questions.</p>
         <div class="choice-grid" id="course-choices"></div>
         <div class="nav-buttons">
@@ -34,7 +38,8 @@
 
       <!-- Step 2: exam details + topics -->
       <section class="panel step" data-step="1">
-        <h2>Tell me about the exam</h2>
+        <span class="eyebrow">Step 02</span>
+        <h2>Tell me about <em>the exam</em></h2>
         <div class="row">
           <div class="field">
             <label for="exam-type">Type</label>
@@ -64,7 +69,7 @@
         </div>
         <div class="field">
           <label for="custom-topic">Add a topic from your syllabus</label>
-          <div style="display:flex; gap:8px">
+          <div class="inline">
             <input type="text" id="custom-topic" placeholder="e.g. Recursion, Firebase auth, Stored procedures…">
             <button class="btn" id="add-topic" type="button">Add</button>
           </div>
@@ -77,14 +82,15 @@
 
       <!-- Step 3: materials -->
       <section class="panel step" data-step="2">
-        <h2>Add your study materials</h2>
+        <span class="eyebrow">Step 03</span>
+        <h2>Add your <em>study materials</em></h2>
         <p class="hint">Upload lecture slideshows and I'll turn each slide into a flashcard. Files are read in your browser and never uploaded anywhere.</p>
         <div class="field">
           <span class="label">Slideshows &amp; handouts</span>
           <label class="dropzone" id="dropzone">
             <input type="file" id="file-input" multiple accept=".pptx,.pdf,.txt,.md" hidden>
             <strong>Drop files here or click to choose</strong><br>
-            <span class="hint">.pptx, .pdf, .txt, .md</span>
+            <span class="hint">.pptx · .pdf · .txt · .md</span>
           </label>
           <ul class="file-list" id="file-list"></ul>
         </div>
@@ -107,10 +113,11 @@
       <section class="step" data-step="3">
         <div class="dash-head">
           <div>
+            <span class="badge" id="dash-badge"></span>
             <h2 id="dash-title"></h2>
             <p class="hint" id="dash-sub"></p>
           </div>
-          <button class="btn btn-sm" data-goto="1" type="button">Edit exam setup</button>
+          <button class="btn" data-goto="1" type="button">Edit exam setup</button>
         </div>
         <div class="stats" id="stats"></div>
         <div class="tabs" role="tablist">

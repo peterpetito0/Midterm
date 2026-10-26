@@ -3,7 +3,7 @@
 window.COURSES = {
   python: {
     name: "Python Programming",
-    icon: "🐍",
+    short: "Python",
     blurb: "Syntax, data structures, functions, OOP, files and errors.",
     topics: [
       "Variables & data types",
@@ -45,7 +45,7 @@ window.COURSES = {
 
   mobile: {
     name: "Mobile App Projects",
-    icon: "📱",
+    short: "Mobile",
     blurb: "App lifecycle, UI layouts, navigation, storage, APIs and publishing.",
     topics: [
       "App lifecycle",
@@ -87,7 +87,7 @@ window.COURSES = {
 
   database: {
     name: "Intro to Database Structures",
-    icon: "🗄️",
+    short: "Databases",
     blurb: "Relational model, ER diagrams, SQL, keys, normalization and transactions.",
     topics: [
       "Relational model",
@@ -129,7 +129,7 @@ window.COURSES = {
 
   finance: {
     name: "Financial Institutions",
-    icon: "🏦",
+    short: "Finance",
     blurb: "Banks, the Fed, interest rates, money markets, regulation and risk.",
     topics: [
       "Role of financial intermediaries",
