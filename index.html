@@ -18,6 +18,7 @@
         <a href="#courses">Courses</a>
         <a href="#how">How it works</a>
         <a href="#privacy">Privacy</a>
+        <span class="auth-slot" id="auth-slot"></span>
         <a class="btn btn-dark" href="study.html">Start studying</a>
       </nav>
     </div>
@@ -87,7 +88,7 @@
         <div><span class="eyebrow">Privacy</span><h2 style="font-size:clamp(40px,5vw,56px);margin-top:8px">Your slides stay <em>yours.</em></h2></div>
         <ul>
           <li><span class="check on">✓</span>Slides and notes are read right in your browser, never uploaded.</li>
-          <li><span class="check on">✓</span>No account, no sign-up, no tracking.</li>
+          <li><span class="check on">✓</span>No account needed. Sign in with Google is optional, and no tracking.</li>
           <li><span class="check on">✓</span>Progress is saved on this device, and "Start over" clears it.</li>
         </ul>
       </div>
@@ -98,6 +99,8 @@
     <div class="wrap"><span>StudyPrep</span><span>Your materials never leave your device.</span></div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/auth.js"></script>
   <script src="js/data.js"></script>
   <script>
     const wrap = document.getElementById("course-cards");
